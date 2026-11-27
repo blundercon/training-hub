@@ -1,0 +1,12 @@
+{
+  "name": "training-hub",
+  "private": true,
+  "type": "module",
+  "workspaces": ["web", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  }
+}
