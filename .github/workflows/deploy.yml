@@ -26,11 +26,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # Reads the site's address from the Pages settings, so a repo rename or a re-run can't build for an old path.
+      - id: pages
+        uses: actions/configure-pages@v5
       - name: Build
         run: npm run build
         env:
-          # Pages serves the site at https://<user>.github.io/<repo>/
-          BASE_PATH: /${{ github.event.repository.name }}/
+          # e.g. "/training-hub" from https://<user>.github.io/training-hub/
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}/
           VITE_APP_VERSION: ${{ github.sha }}
           # Repository variables (Settings > Secrets and variables > Actions > Variables).
           # Not secrets: they are visible in the page. Kept out of git so forks don't reuse them.
